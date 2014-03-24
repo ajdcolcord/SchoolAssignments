@@ -1,0 +1,171 @@
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+
+import java.awt.Color;
+import java.util.Random;
+
+import tester.*;
+
+import javalib.funworld.*;
+import javalib.colors.*;
+import javalib.worldcanvas.*;
+import javalib.worldimages.*;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//FIELDWORLD
+
+// represents the world of the field, containing all the items in the game
+class FieldWorld extends World {
+    
+    int width = 300;
+    int height = 500;
+    
+    Player player;
+    Ball ball;
+    
+    FieldWorld(Player player, Ball ball) {
+        super();
+        this.player = player;
+        this.ball = ball;
+    }
+
+    // This illustrates the entire background for the image of this world
+    public WorldImage field = 
+            new RectangleImage(
+                    new Posn(150, 250), this.width, this.height, new Green());
+    
+    /////////////////////////////////////////////////////////////////
+    //FIELDWORLD METHODS
+    
+    // produce the images for the world
+    public WorldImage fieldImage() {
+        return new OverlayImages(this.field, 
+                new OverlayImages(this.ball.ballImage(), 
+                        this.player.playerImage()));
+    } 
+    /*
+    // produce the World after one clock tick has passed in this world
+    World onTick() {
+        return 
+                new FieldWorld(this.player.onTick(), this.ball.onTick());
+    }
+    
+    // produce the World after user pressed the given key in this world
+    World onKeyEvent(String ke) {
+        return new FieldWorld(this.player.onKeyEvent(ke));
+    }
+    */
+    
+    /////////////////////////////////////////////////////////////////
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//PLAYER
+/* Template
+Fields:
+...this.posn... - Posn
+*/
+// represents the balls that have to be caught by the player
+class Player {
+    Posn posn;
+    
+    Player(Posn posn) {
+        this.posn = posn;
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    //PLAYER METHODS
+    
+    // produce the image for the player
+    public WorldImage playerImage() {
+        return new RectangleImage(this.posn, 30, 15, new Black());
+    }
+    
+    /////////////////////////////////////////////////////////////////
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//BALL
+/* Template
+Fields:
+...this.posn...  - Posn
+*/
+// represents the balls that have to be caught by the player
+class Ball {
+    Posn posn;
+    
+    Ball(Posn posn) {
+        this.posn = posn;
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    //BALL METHODS
+    
+    // produce the image for the ball
+    public WorldImage ballImage() {
+        return new CircleImage(this.posn, 5, new White());
+    }
+   
+    //move the ball toward the bottom of the screen
+    public Ball moveBall() {
+        return new Ball(new Posn(this.posn.x, (this.posn.y - 5)));
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ExamplesBalls
+class ExamplesBalls {
+    Player p1 = new Player(new Posn(150, 450));
+    Player p2 = new Player(new Posn(20, 10));
+    
+    Ball b1 = new Ball(new Posn(20, 20));
+    Ball b2 = new Ball(new Posn(50, 500));
+    
+    FieldWorld f1 = new FieldWorld(this.p1, this.b1);
+    FieldWorld f2 = new FieldWorld(this.p2, this.b2);
+    
+    
+    /////////////////////////////////////////////////////////////////
+    //METHODS TESTS
+ /*   
+    // fieldImage() tests
+    boolean testFieldImage(Tester t) {
+        return t.checkExpect(
+                this.f1.fieldImage(), new Ball(new Posn(20, 20))) &&
+               t.checkExpect(
+                this.f2.fieldImage(), new FieldWorld(this.p2, this.b2));
+    }
+    
+    // playerImage() tests
+    boolean testPlayerImage(Tester t) {
+        return t.checkExpect(
+                this.p1.playerImage(), new Player(new Posn(150, 450))) &&
+               t.checkExpect(
+                this.p2.playerImage(), new Player(new Posn(20, 20)));
+    }
+    
+    // ballImage() tests
+    boolean testBallImage(Tester t) {
+        return t.checkExpect(
+                this.b1.ballImage(), new Ball(new Posn(20, 20))) &&
+               t.checkExpect(
+                this.b2.ballImage(), new Ball(new Posn(0, 0)));
+    }
+    */
+    
+    //moveBall test
+    boolean testMoveBall(Tester t) {
+        return t.checkExpect(this.b1.moveBall(), new Ball(new Posn(20, 15))) &&
+               t.checkExpect(this.b2.moveBall(), new Ball(new Posn(50, 495)));
+    }
+    /////////////////////////////////////////////////////////////////
+}

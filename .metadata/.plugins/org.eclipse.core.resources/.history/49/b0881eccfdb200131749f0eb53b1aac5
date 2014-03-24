@@ -1,0 +1,38 @@
+/** a class for defining simple mathematical functions (methods)
+ * 
+ * @author Austin Colcord
+ */
+public class Algorithms {
+    
+    /** compute the location of the car
+     * @param startLoc the starting location of the car
+     * @param speed the speed of the car
+     * @param timeElapsed the time that has been elapsed
+     * @return int the new location of the car after the clock ticks
+     */
+    static int carMove(int startLoc, int speed, int timeElapsed) {
+        return startLoc + speed * timeElapsed;
+    }
+    
+    // compute the height of the rocket after the next tick, 
+    // given its current height 
+    // and its seed in pixels per clock tick
+    static int nextRocket(int startLoc, int speed) {
+        if (speed - startLoc >= 0) {
+            return 0;
+        }
+        else {
+            return startLoc - speed; 
+        }
+    }
+    
+    // compute the area of a circle, given its radius
+    static double circleArea(int rad) {
+        return Math.PI * rad * rad;
+    }
+    
+    // compute the perimeter of a circle, given its radius
+    static double circlePerimeter(int rad) {
+        return Math.PI * 2 * rad;
+    }
+} 

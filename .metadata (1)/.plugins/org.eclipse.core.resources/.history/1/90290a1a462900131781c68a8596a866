@@ -1,0 +1,99 @@
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+import tester.*;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ILoS
+// to represent a list of Strings
+interface ILoS{
+    // combine all Strings in this list into one
+    String combine();
+    // tell if the list is sorted in alphabetical order
+    boolean isSorted();
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//MtLoS
+// to represent an empty list of Strings
+class MtLoS implements ILoS{
+    MtLoS(){}
+
+    // combine all Strings in this list into one
+    public String combine(){
+        return "";
+    }  
+    
+    //isSorted returns true, since this has no contents
+    public boolean isSorted() {
+        return true;
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ConsLoS
+/*
+TEMPLATE
+FIELDS:
+... this.first ...         -- String
+... this.rest ...          -- ILoS
+
+METHODS
+... this.combine() ...      -- String
+
+METHODS FOR FIELDS
+... this.first.concat(String) ...       -- String
+... this.first.compareTo(String) ...    -- int
+... this.rest.combine() ...             -- String
+
+   */
+// to represent a nonempty list of Strings
+class ConsLoS implements ILoS{
+    String first;
+    ILoS rest;
+
+    ConsLoS(String first, ILoS rest){
+        this.first = first;
+        this.rest = rest;  
+    }
+
+    // combine all Strings in this list into one
+    public String combine(){
+        return this.first.concat(this.rest.combine());
+    }  
+    
+    //compareSort(String that) tells if this is before that
+    public boolean compareSort(String that) {
+        return this.first.compareTo(that) <= 0;
+    }
+    //isSorted tells if this list is sorted
+    public boolean isSorted() {
+        if (this.first.compareSort)
+    }
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//EXAMPLES
+// to represent examples for lists of strings
+class ExamplesStrings{
+    ExamplesStrings(){}
+
+    ILoS mary = new ConsLoS("Mary ",
+            new ConsLoS("had ",
+                    new ConsLoS("a ",
+                            new ConsLoS("little ",
+                                    new ConsLoS("lamb.", new MtLoS())))));
+
+    boolean testCombine(Tester t){
+        return 
+                t.checkExpect(this.mary.combine(), "Mary had a little lamb.");
+    }
+}

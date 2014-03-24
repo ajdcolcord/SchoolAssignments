@@ -1,0 +1,51 @@
+/** a class for defining simple mathematical functions (methods)
+ * for small examples
+ * 
+ * @author Austin Colcord
+ */
+public class Algorithms {
+    
+    /** compute the location of the car
+     * 
+     * @param startLoc the starting location of the car
+     * @param speed the speed of the car
+     * @param timeElapsed the time that has been elapsed
+     * @return int the new location of the car after the clock ticks
+     */
+    static int carMove(int startLoc, int speed, int timeElapsed) {
+        return startLoc + speed * timeElapsed;
+    }
+    
+    /** compute the height of the rocket after the next tick of the clock
+     * 
+     * @param startLoc the starting location of the car
+     * @param speed the speed of the car
+     * @return int the height of the rocket after a tick
+     */
+    static int nextRocket(int startLoc, int speed) {
+        if (speed - startLoc >= 0) {
+            return 0;
+        }
+        else {
+            return startLoc - speed; 
+        }
+    }
+    
+    /** compute the area of a circle, given it's radius
+     * 
+     * @param rad the radius of the circle
+     * @return double the area of the circle
+     */
+    static double circleArea(int rad) {
+        return Math.PI * rad * rad;
+    }
+    
+    /** compute the perimeter of a circle, given it's radius
+     * 
+     * @param rad the radius of the circle
+     * @return double the perimeter of the circle
+     */
+    static double circlePerimeter(int rad) {
+        return Math.PI * 2 * rad;
+    }
+} 

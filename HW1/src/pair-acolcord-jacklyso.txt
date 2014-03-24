@@ -1,0 +1,17 @@
+// assignment 1
+// pair xxx
+// partner1-colcord-austin
+// partner1-ajdcolcord
+// partner2-su-jun
+// partner2-jacklyso
+
+
+Person: 30 minutes
+
+Pizza: 1 hour
+
+ExamplesAlgorithms: 40 minutes
+
+
+We both worked equally, met in the library for about
+2 hours together and worked on the problems.

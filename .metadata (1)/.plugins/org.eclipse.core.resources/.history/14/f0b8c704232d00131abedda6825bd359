@@ -1,0 +1,53 @@
+// CS 2510 Lab 5
+import tester.*;
+
+// to represent a calendar date
+public class Date {
+  int year;
+  int month;
+  int day;
+
+  /*Date(int year, int month, int day){
+    this.year = year;
+    this.month = month;
+    this.day = day; 
+  }
+  */
+  
+  Date(int year, int month, int day){
+      if(this.validYear(year))
+         this.year = year;
+      else
+         throw new IllegalArgumentException("Invalid year: " + year);
+    
+      if(this.validMonth(month))
+         this.month = month;
+      else
+         throw new IllegalArgumentException("Invalid month: " + month);
+    
+      if(this.validDay(day))
+         this.day = day;
+      else
+         throw new IllegalArgumentException("Invalid day: " + day);
+   }
+  
+  //validNumber
+  public boolean validNumber(int num, int low, int high) {
+      return (num >= low) && (num <= high);
+  }
+  
+  //validDay
+  public boolean validDay(int d) {
+      return (this.validNumber(d, 1, 31));
+  }
+  
+  //validMonth
+  public boolean validMonth(int m) {
+      return (this.validNumber(m,  1,  12));
+  }
+  
+  //validYear
+  public boolean validYear(int y) {
+      return (this.validNumber(y, 1, 10000));
+  }
+}

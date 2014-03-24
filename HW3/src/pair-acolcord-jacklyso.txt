@@ -1,0 +1,32 @@
+
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+Strings Problem -- Monday 2 hour (Jun)
+                   Tuesday 1 Hour (both)
+                   Tuesday 1 Hour (Austin)
+                   Tuesday 0.45 hours at tutor (both)
+
+
+Images Problem -- Monday 1.5 Hours (Austin)
+				  Second Monday 0.2 hours (Austin)
+
+
+MyGame Problem --
+Tuesday - 0.5 hour at tutor (both)
+          1 Hour (Austin)
+
+Wednesday - 1.5 hours (Austin)
+
+Thursday - 2 hours (both)
+
+Friday - 2.5 hours at tutor (Austin)
+
+Saturday - 3 hours (Austin)
+
+Sunday - 5 hours (Austin)
+
+Second Monday - 0.5 hours (Austin)

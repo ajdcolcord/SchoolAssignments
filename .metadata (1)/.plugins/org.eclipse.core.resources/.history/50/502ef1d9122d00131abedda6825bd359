@@ -1,0 +1,287 @@
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+
+import java.awt.Color;
+import java.util.Random;
+
+import tester.*;
+
+import javalib.funworld.*;
+import javalib.colors.*;
+import javalib.worldcanvas.*;
+import javalib.worldimages.*;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//FIELDWORLD
+
+// represents the world of the field, containing all the items in the game
+class FieldWorld extends World {
+    
+    int width = 300;
+    int height = 500;
+    
+    Player player;
+    Ball ball;
+    
+    FieldWorld(Player player, Ball ball) {
+        super();
+        this.player = player;
+        this.ball = ball;
+    }
+
+    // This illustrates the entire background for the image of this world
+    public WorldImage field = 
+            new RectangleImage(
+                    new Posn(150, 250), this.width, this.height, new Green());
+    
+    /////////////////////////////////////////////////////////////////
+    //FIELDWORLD METHODS
+    
+    // produce the images for the world
+    public WorldImage makeImage() {
+        return new OverlayImages(this.field, 
+                new OverlayImages(this.ball.ballImage(), 
+                        this.player.playerImage()));
+    } 
+    
+    // produce the World after one clock tick has passed in this world
+    public World onTick() {
+        return 
+                new FieldWorld(this.player, this.ball.moveBall());
+    }
+    
+    // produce the World after user pressed the given key in this world
+    public World onKeyEvent(String ke) {
+        return new FieldWorld(this.player.onKeyEvent(ke), this.ball);
+    }
+    
+    
+    
+    /////////////////////////////////////////////////////////////////
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//PLAYER
+/* Template
+Fields:
+...this.posn... - Posn
+*/
+// represents the balls that have to be caught by the player
+class Player {
+    Posn posn;
+    
+    Player(Posn posn) {
+        this.posn = posn;
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    //PLAYER METHODS
+    
+    // produce the image for the player
+    public WorldImage playerImage() {
+        return new RectangleImage(this.posn, 30, 15, new Black());
+    }
+    
+    // move the player on the key event (left or right)
+    public Player onKeyEvent(String ke) {
+        if (ke.equals("left")) {
+            if (this.posn.x >= 15) {
+                return new Player(new Posn((this.posn.x - 10), this.posn.y));
+            }
+            else return this;
+        }
+        else if (ke.equals("right")) {
+            if (this.posn.x <= 285) {
+                return new Player(new Posn((this.posn.x + 10), this.posn.y));
+            }
+            else return this;
+        }
+        else return this;
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//BALL
+/* Template
+Fields:
+...this.posn...  - Posn
+*/
+// represents the balls that have to be caught by the player
+class Ball {
+    Posn posn;
+    
+    Ball(Posn posn) {
+        this.posn = posn;
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    //BALL METHODS
+    
+    // produce the image for the ball
+    public WorldImage ballImage() {
+        return new DiskImage(this.posn, 5, new White());
+    }
+   
+    // move the ball toward the bottom of the screen
+    public Ball moveBall() {
+        return new Ball(new Posn(this.posn.x, (this.posn.y + 5)));
+    }
+    
+    // tell if the ball is caught by the player
+    public boolean caughtBall(Player player) {
+        return (((player.posn.x - 15) >= this.posn.x) && 
+                (this.posn.x >= (player.posn.x + 15))) &&
+                (player.posn.y == (this.posn.y + 7.5));
+            
+        
+    }
+     
+    /////////////////////////////////////////////////////////////////
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ILoBall
+interface ILoBall {
+    ILoBall reduceList();
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//MtLoBall
+class MtLoBall implements ILoBall {
+    MtLoBall() { }
+    
+    // returns this list of balls
+    public ILoBall reduceList() {
+        return this;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//ConsLoBall
+class ConsLoBall implements ILoBall {
+    Ball first;
+    ILoBall rest;
+    
+    ConsLoBall(Ball first, ILoBall rest) {
+        this.first = first;
+        this.rest = rest;
+    }
+    
+    // when the ball is caught or missed, subtract 1 ball from the list
+    public ILoBall reduceList() {
+        return this.rest;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//ExamplesBalls
+class ExamplesBalls {
+    Player p1 = new Player(new Posn(150, 450));
+    Player p2 = new Player(new Posn(20, 10));
+    Player p3 = new Player(new Posn(5, 100));
+    Player p4 = new Player(new Posn(295, 100));
+    
+    Ball b1 = new Ball(new Posn(20, 20));
+    Ball b2 = new Ball(new Posn(50, 500));
+    Ball b3 = new Ball(new Posn(150, 100));
+    
+    ILoBall lempty = new MtLoBall();
+    ILoBall l1 = new ConsLoBall(this.b1, this.lempty);
+    ILoBall l2 = new ConsLoBall(this.b2, this.l1);
+    
+    FieldWorld f1 = new FieldWorld(this.p1, this.b1);
+    FieldWorld f2 = new FieldWorld(this.p2, this.b2);
+    
+    
+    /////////////////////////////////////////////////////////////////
+    //METHODS TESTS
+    
+    // makeImage() tests
+    boolean testMakeImage(Tester t) {
+        return t.checkExpect(
+                this.f1.makeImage(),
+                new OverlayImages(
+                        new RectangleImage(
+                            new Posn(150, 250), 300, 500, new Green()), 
+                        new OverlayImages(
+                                new DiskImage(
+                                        new Posn(20, 20), 5, new White()), 
+                            new RectangleImage(
+                                new Posn(150, 450), 30, 15, new Black())))) &&
+               t.checkExpect(
+                this.f2.makeImage(), 
+                new OverlayImages(
+                        new RectangleImage(
+                            new Posn(150, 250), 300, 500, new Green()), 
+                        new OverlayImages(
+                                new DiskImage(
+                                        new Posn(50, 500), 5, new White()), 
+                            new RectangleImage(
+                                new Posn(20, 10), 30, 15, new Black()))));
+    }
+    
+    // playerImage() tests
+    boolean testPlayerImage(Tester t) {
+        return t.checkExpect(
+                this.p1.playerImage(), 
+                new RectangleImage(
+                        new Posn(150, 450), 30, 15, new Black())) &&
+               t.checkExpect(
+                this.p2.playerImage(), 
+                new RectangleImage(new Posn(20, 10), 30, 15, new Black()));
+    }
+    
+    // ballImage() tests
+    boolean testBallImage(Tester t) {
+        return t.checkExpect(
+                this.b1.ballImage(), 
+                new DiskImage(new Posn(20, 20), 5, new White())) &&
+               t.checkExpect(
+                this.b2.ballImage(), 
+                new DiskImage(new Posn(50, 500), 5, new White()));
+    }
+    
+    
+    //moveBall test
+    boolean testMoveBall(Tester t) {
+        return t.checkExpect(this.b1.moveBall(), new Ball(new Posn(20, 25))) &&
+               t.checkExpect(this.b2.moveBall(), new Ball(new Posn(50, 505)));
+    }
+    
+    //onKeyEvent test
+    boolean testOnKeyEvent(Tester t) {
+        return t.checkExpect(this.p1.onKeyEvent("left"),
+                new Player(new Posn(140, 450))) &&
+               t.checkExpect(this.p1.onKeyEvent("right"),
+                new Player(new Posn(160, 450))) &&
+               t.checkExpect(this.p3.onKeyEvent("left"), this.p3) &&
+               t.checkExpect(this.p4.onKeyEvent("right"), this.p4);
+    }
+    
+    //reduceList test
+    boolean testReduceList(Tester t) {
+        return t.checkExpect(this.lempty.reduceList(), this.lempty) &&
+                t.checkExpect(this.l1.reduceList(), this.lempty) &&
+                t.checkExpect(this.l2.reduceList(), this.l1);
+    }
+    
+    //caughtBall test
+    boolean testCaughtBall(Tester t) {
+        return t.checkExpect(this.b3.caughtBall(this.p1), false) ;
+    }
+    /////////////////////////////////////////////////////////////////
+    
+    /////////////////////////////////////////////////////////////////
+    //RUN ANIMATION
+    //boolean runAnimation = this.f1.bigBang(300, 500, 0.01);
+}

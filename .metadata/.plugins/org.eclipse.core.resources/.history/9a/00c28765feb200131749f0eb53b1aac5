@@ -1,0 +1,37 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class AlgorithmsTests {
+
+    /** test the method carMove */                 
+    public void testCarMove() {
+        assertEquals(Algorithms.carMove(20, 5, 50), 270);
+        assertEquals(Algorithms.carMove(20, 5, 50), 270);
+        assertEquals(Algorithms.carMove(10, 3, 60), 190); 
+    }
+    
+    // test the method nextRocket:
+    boolean testNextRocket(Tester t) {
+        return
+        t.checkExpect(Algorithms.nextRocket(100, 5), 95,
+                      "starts at 100, speed 5, the rocket descends to 95:") &&  
+        t.checkExpect(Algorithms.nextRocket(0, 5), 0,
+                      "starts at 0, speed 5, the rocket remains at 0:") &&  
+        t.checkExpect(Algorithms.nextRocket(20, 20), 0,
+                      "starts at 20, speed 20, the rocket lands at 0:") && 
+        t.checkExpect(Algorithms.nextRocket(15, 20), 0,
+                      "starts at 15, speed 20, the rocket lands at 0:"); 
+    }
+    
+    // test the method of two times the area is nearly
+    // the same as radius times the perimeter
+    boolean testAreaPerimeter(Tester t) {
+        return t.checkInexact(Algorithms.circleArea(3) * 2,
+                (Algorithms.circlePerimeter(3) * 3), .01) &&
+               t.checkInexact(Algorithms.circleArea(5) * 2,
+                (Algorithms.circlePerimeter(5) * 5), .0001);
+    }
+
+}

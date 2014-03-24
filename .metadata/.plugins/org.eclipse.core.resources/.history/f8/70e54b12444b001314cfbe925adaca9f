@@ -1,0 +1,13 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/** Testing the method toString */
+public class TestToString extends Examples {
+
+    @Test
+    public void test() {
+        assertEquals("Hello: 1\n", this.boston.toString());
+    }
+
+}

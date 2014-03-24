@@ -1,0 +1,9 @@
+MapAlgorithm$1StringLength
+MapAlgorithm$1BookAuthor
+MapAlgorithm$1ExamplesArrayListLoops
+MapAlgorithm$1BookTitle
+MapAlgorithm$1Book2T
+MapAlgorithm$1StringFirst
+MapAlgorithm$1String2T
+MapAlgorithm$1BookPrice
+MapAlgorithm

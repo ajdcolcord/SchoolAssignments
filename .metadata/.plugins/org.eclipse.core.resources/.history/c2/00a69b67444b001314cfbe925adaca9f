@@ -1,0 +1,13 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/** Testing the method toString */
+public class TestToString extends Examples {
+
+    @Test
+    public void test() {
+        assertEquals("new City(02115, Boston, MA, 71.092215, 42.342706)", this.boston.toString());
+    }
+
+}

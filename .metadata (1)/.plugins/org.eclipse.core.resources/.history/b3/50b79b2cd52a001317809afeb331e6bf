@@ -1,0 +1,147 @@
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+import tester.*;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ILoS
+// to represent a list of Strings
+interface ILoS{
+    // combine all Strings in this list into one
+    String combine();
+    
+    //compares two items and returns true if this String
+    //comes alphabetically before that
+    boolean compareAlph(String that);
+    
+    //returns the first of the list
+    String firstList();
+    
+    // tell if the list is sorted in alphabetical order
+    boolean isSorted();
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//MtLoS
+// to represent an empty list of Strings
+class MtLoS implements ILoS{
+    MtLoS(){}
+
+    // combine all Strings in this list into one
+    public String combine(){
+        return "";
+    }  
+    
+    // compares two items to see if they are in alphabetical order
+    public boolean compareAlph(String that) {
+        return true;
+    }
+    
+    // return the first of the list
+    public String firstList() {
+        return "";
+    }
+    // tells if the list is sorted
+    public boolean isSorted() {
+        return true;
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//ConsLoS
+/*
+TEMPLATE
+FIELDS:
+... this.first ...         -- String
+... this.rest ...          -- ILoS
+
+METHODS
+... this.combine() ...      -- String
+
+METHODS FOR FIELDS
+... this.first.concat(String) ...       -- String
+... this.first.compareTo(String) ...    -- int
+... this.rest.combine() ...             -- String
+
+   */
+// to represent a nonempty list of Strings
+class ConsLoS implements ILoS{
+    String first;
+    ILoS rest;
+
+    ConsLoS(String first, ILoS rest){
+        this.first = first;
+        this.rest = rest;  
+    }
+
+    // combine all Strings in this list into one
+    public String combine(){
+        return this.first.concat(this.rest.combine());
+    }  
+    
+    // compares two items to see if they are in alphabetical order
+    public boolean compareAlph(String that) {
+        return (this.first.toLowerCase().compareTo(that.toLowerCase()) <= 0);
+    }
+    
+    // tells what the first of the list is
+    public String firstList() {
+        return this.first;
+    }
+    
+    // tells if the list is sorted
+    public boolean isSorted() {
+        if (this.first.compareAlph(this.rest.firstList())) {
+            return (this.rest.isSorted());
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//EXAMPLES
+// to represent examples for lists of strings
+class ExamplesStrings {
+    //ExamplesStrings() { }
+    
+    ILoS emptylist = new MtLoS();
+    
+    ILoS meow = new ConsLoS("meow!", this.emptylist);
+    ILoS goes = new ConsLoS("goes ", this.meow);
+    ILoS cat = new ConsLoS("Cat ", this.goes);
+
+    ILoS mary = new ConsLoS("Mary ",
+            new ConsLoS("had ",
+                    new ConsLoS("a ",
+                            new ConsLoS("little ",
+                                    new ConsLoS("lamb.", new MtLoS())))));
+    
+    String bee = "bee";
+    String cee = "cee";
+    String dee = "dee";
+    String empty = "";
+
+    boolean testCombine(Tester t){
+        return  t.checkExpect(this.mary.combine(), "Mary had a little lamb.") &&
+                t.checkExpect(this.cat.combine(), "Cat goes meow!");
+    }
+    boolean testCompareAlph(Tester t) {
+        return  t.checkExpect(this.mary.compareAlph(this.bee), false) && 
+                t.checkExpect(this.cat.compareAlph(this.cee), true) &&
+                t.checkExpect(this.meow.compareAlph(this.empty), false);
+    }
+    boolean testFirstList(Tester t) {
+        return  t.checkExpect(this.cat.firstList(), "Cat ") &&
+                t.checkExpect(this.emptylist.firstList(), "") &&
+                t.checkExpect(this.meow.firstList(), "meow!");
+    }
+}

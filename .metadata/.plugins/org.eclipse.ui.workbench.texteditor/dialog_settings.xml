@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="263" key="DIALOG_WIDTH"/>
+		<item value="455" key="DIALOG_Y_ORIGIN"/>
+		<item value="11" key="DIALOG_X_ORIGIN"/>
+		<item value="369" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="worldEnds" key="selection"/>
+		<list key="findhistory">
+			<item value="worldends"/>
+			<item value="onkeyevent"/>
+			<item value="moveobjects"/>
+			<item value="moveobject"/>
+			<item value="buffer"/>
+			<item value="win"/>
+			<item value="Yeezus"/>
+			<item value="winState"/>
+		</list>
+		<list key="replacehistory">
+			<item value="yeezus"/>
+			<item value="maNeighbors"/>
+			<item value="riNeighbors"/>
+			<item value="ctNeighbors"/>
+			<item value="meNeighbors"/>
+			<item value="vtNeighbors"/>
+			<item value="nhNeighbors"/>
+			<item value="Node"/>
+		</list>
+	</section>
+</section>

@@ -1,0 +1,178 @@
+// assignment 3
+// partner1-Colcord-Austin
+// partner1-acolcord
+// partner2-Su-Jun
+// partner2-jacklyso
+
+
+
+// CS 2510 Fall 2013
+// Assignment 3
+
+import tester.*;
+
+// to represent different files in a computer
+interface IFile{
+
+    // compute the size of this file
+    int size();
+
+    // compute the time (in seconds) to download this file
+    // at the given download rate
+    int downloadTime(int rate);
+
+    // is the owner of this file the same 
+    // as the owner of the given file?
+    boolean sameOwner(IFile that);
+    
+    // thisOwner() returns the owner of the IFile
+    String thisOwner();
+}
+
+// to represent a text file
+class TextFile implements IFile{
+    String name;
+    String owner;
+    int length;   // in bytes
+
+    TextFile(String name, String owner, int length){
+        this.name = name;
+        this.owner = owner;
+        this.length = length;
+    }
+
+    // compute the size of this file
+    public int size(){
+        return this.length;
+    }  
+
+    // compute the time (in seconds) to download this file
+    // at the given download rate
+    public int downloadTime(int rate){
+        return this.size() * rate;
+    }
+    
+    // thisOwner tell the owner of this file
+    public String thisOwner() {
+        return this.owner;
+    }
+
+    // is the owner of this file the same 
+    // as the owner of the given file?
+    public boolean sameOwner(IFile that){
+        return (this.owner.equals(that.thisOwner()));
+    }
+}
+
+//to represent an image file
+class ImageFile implements IFile{
+    String name;
+    String owner;
+    int width;   // in pixels
+    int height;  // in pixels
+
+    ImageFile(String name, String owner, int width, int height){
+        this.name = name;
+        this.owner = owner;
+        this.width = width;
+        this.height = height;
+    }
+
+    // compute the size of this file
+    public int size(){
+        return this.width * this.height;
+    }  
+
+    // compute the time (in seconds) to download this file
+    // at the given download rate
+    public int downloadTime(int rate){
+        return this.size() * rate;
+    }
+    
+    // thisOwner tell the owner of this file
+    public String thisOwner() {
+        return this.owner;
+    }
+
+    // is the owner of this file the same 
+    // as the owner of the given file?
+    public boolean sameOwner(IFile that){
+        return true;
+    }
+}
+
+
+//to represent an audio file
+class AudioFile implements IFile{
+    String name;
+    String owner;
+    int speed;   // in bytes per second
+    int length;  // in seconds of recording time
+
+    AudioFile(String name, String owner, int speed, int length){
+        this.name = name;
+        this.owner = owner;
+        this.speed = speed;
+        this.length = length;
+    }
+
+    // compute the size of this file
+    public int size(){
+        return this.speed * this.length;
+    }  
+
+    // compute the time (in seconds) to download this file
+    // at the given download rate
+    public int downloadTime(int rate){
+        return this.size() * rate;
+    }
+    
+    // thisOwner tell the owner of this file
+    public String thisOwner() {
+        return this.owner;
+    }
+
+    // is the owner of this file the same 
+    // as the owner of the given file?
+    public boolean sameOwner(IFile that){
+        return true;
+    }
+}
+
+class ExamplesFiles{
+    ExamplesFiles(){}
+
+    IFile text1 = new TextFile("English paper", "Maria", 1234);
+    IFile picture = new ImageFile("Beach", "Maria", 400, 200);
+    IFile song = new AudioFile("Help", "Pat", 200, 120);
+    
+    IFile text2 = new TextFile("Homework 3", "Billy", 1555);
+    IFile picture2 = new ImageFile("Ocean", "Robert", 1000, 800);
+    IFile song2 = new AudioFile("Working", "Mark", 400, 100);
+
+    // test the method size for the classes that represent files
+    boolean testSize(Tester t){
+        return
+                t.checkExpect(this.text1.size(), 1234) &&
+                t.checkExpect(this.picture.size(), 80000) &&
+                t.checkExpect(this.song.size(), 24000) &&
+                
+                t.checkExpect(this.text2.size(), 1555) &&
+                t.checkExpect(this.picture2.size(), 800000) &&
+                t.checkExpect(this.song2.size(), 40000);
+    }
+    
+    //test downloadTime
+    boolean testDownloadTime(Tester t) {
+        return t.checkExpect(this.text1.downloadTime(10), 12340) &&
+                t.checkExpect(this.picture.downloadTime(10), 800000) &&
+                t.checkExpect(this.song.downloadTime(10), 240000);
+    }
+    
+    //test thisOwner()
+    boolean testThisOwner(Tester t) {
+        return t.checkExpect(this.text2.thisOwner(), "Billy") &&
+                t.checkExpect(this.picture2.thisOwner(), "Robert") &&
+                t.checkExpect(this.song2.thisOwner(), "Mark");
+    }
+}

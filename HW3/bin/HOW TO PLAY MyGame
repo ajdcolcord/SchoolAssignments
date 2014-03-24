@@ -1,0 +1,19 @@
+HOW TO PLAY THE GAME
+
+The game is simple. You control the black rectangle 
+(the goalie) on the bottom of the screen. You can
+move either left or right using the arrow keys (you
+can hold down the keys), but you cannot move up or 
+down. There is a white ball (soccer ball) starting
+at the top of the Field, and it will steadily move
+toward the bottom of the Field (the goal).
+
+The point of the game is to block the balls from
+going into the goal (or hitting the bottom edge of
+the field), by moving right and left to ‘catch’
+the balls one at a time. If you miss a ball, there
+is no penalty, however, the only way to win the
+game is to catch 10 individual balls. 
+
+After you have caught ten balls, the screen will
+display “Game Over!!!”, and the game will be finished.
